@@ -14,15 +14,15 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-/* GET users listing. */
-// router.get("/", function(req, res, next) {
-//   db.collection("poems")
-//     .find()
-//     .toArray(function(err, result) {
-//       if (err) throw err;
-//       res.send(result);
-//     });
-// });
+router.get("/", function(req, res, next) {
+  db.collection("poems")
+    .find({}).sort({'title': 1})
+    .toArray(function(err, result) {
+      if (err) return res.status(500).send("Woops something went wrong");
+      if (!result.length) return res.status(404).send("Poem not found"); 
+      return res.send(result);
+    });
+})
 
 router.get("/title/:title", function(req, res, next) {
   db.collection("poems")
@@ -36,7 +36,7 @@ router.get("/title/:title", function(req, res, next) {
 
 router.get("/category/:cat", function(req, res, next) {
   db.collection("poems")
-    .find({ category: req.params.cat })
+    .find({ category: req.params.cat }).sort({'title': 1})
     .toArray(function(err, result) {
       if (err) return res.status(500).send("Woops something went wrong");
       if (!result.length) return res.status(404).send("Category not found") 
