@@ -1,15 +1,18 @@
-var express = require("express");
-var router = express.Router();
+import * as express from 'express';
+import router from 'express';
 
+import * as dotenv from "dotenv";
+
+dotenv.config();
 //Import the mongoose module
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 //Set up default mongoose connection
-var mongoDB = "mongodb://127.0.0.1/geoffrey_whitehead";
+const mongoDB = process.env.DB;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 //Get the default connection
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -54,4 +57,4 @@ router.get("/category/:cat", function(req, res, next) {
     });
 });
 
-module.exports = router;
+export default router;
