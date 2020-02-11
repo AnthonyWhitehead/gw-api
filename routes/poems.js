@@ -16,31 +16,42 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 router.get("/", function(req, res, next) {
   db.collection("poems")
-    .find({}).sort({'title': 1})
+    .find({})
+    .sort({ title: 1 })
     .toArray(function(err, result) {
       if (err) return res.status(500).send("Woops something went wrong");
-      if (!result.length) return res.status(404).send("Poem not found"); 
+      if (!result.length) return res.status(404).send("Poem not found");
       return res.send(result);
     });
-})
+});
+
+router.get("/category-links", function(res) {
+   db.collection("poems").distinct("category").toArray(function(err, result) {
+      if (err) return res.status(500).send("Woops something went wrong");
+      if (!result.length) return res.status(404).send("Poem not found");
+      return res.send(result);
+   });
+});
 
 router.get("/title/:title", function(req, res, next) {
   db.collection("poems")
     .find({ title: req.params.title })
     .toArray(function(err, result) {
       if (err) return res.status(500).send("Woops something went wrong");
-      if (!result.length) return res.status(404).send("Poem not found"); 
+      if (!result.length) return res.status(404).send("Poem not found");
       return res.send(result);
     });
 });
 
 router.get("/category/:cat", function(req, res, next) {
   db.collection("poems")
-    .find({ category: req.params.cat }).sort({'title': 1})
+    .find({ category: req.params.cat })
+    .sort({ title: 1 })
     .toArray(function(err, result) {
       if (err) return res.status(500).send("Woops something went wrong");
-      if (!result.length) return res.status(404).send("Category not found") 
+      if (!result.length) return res.status(404).send("Category not found");
       return res.send(result);
     });
-})
+});
+
 module.exports = router;
