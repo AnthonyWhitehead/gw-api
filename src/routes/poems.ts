@@ -1,15 +1,15 @@
-var express = require("express");
-var router = express.Router();
+import express from 'express';
+import mongoose from 'mongoose';
 
-//Import the mongoose module
-var mongoose = require("mongoose");
+const router = express.Router();
 
-//Set up default mongoose connection
-var mongoDB = "mongodb://127.0.0.1/geoffrey_whitehead";
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+require('dotenv').config();
+
+const mongoDB = process.env.DB;
+mongoose.connect(mongoDB || '', { useNewUrlParser: true });
 
 //Get the default connection
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -25,13 +25,15 @@ router.get("/", function(req, res, next) {
     });
 });
 
-router.get("/category-links", function(res) {
-   db.collection("poems").distinct("category").toArray(function(err, result) {
-      if (err) return res.status(500).send("Woops something went wrong");
-      if (!result.length) return res.status(404).send("Poem not found");
-      return res.send(result);
-   });
-});
+// router.get("/category-links", function(res) {
+//   const cats = db.collection("poems").distinct("category");
+
+//     cats.toArray(function(err, result) {
+//       if (err) return res.status(500).send("Woops something went wrong");
+//       if (!result.length) return res.status(404).send("Poem not found");
+//       return res.send(result);
+//     });
+// });
 
 router.get("/title/:title", function(req, res, next) {
   db.collection("poems")
@@ -54,4 +56,4 @@ router.get("/category/:cat", function(req, res, next) {
     });
 });
 
-module.exports = router;
+export default router;
