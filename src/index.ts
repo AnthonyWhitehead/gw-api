@@ -10,6 +10,7 @@ import helmet from "helmet";
 import poemsRouter from './routes/poems';
 
 dotenv.config();
+const path = require('path');
 
 /**
  * App Variables
