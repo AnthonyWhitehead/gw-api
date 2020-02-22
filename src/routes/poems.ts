@@ -25,15 +25,13 @@ router.get("/", function(req, res, next) {
     });
 });
 
-// router.get("/category-links", function(res) {
-//   const cats = db.collection("poems").distinct("category");
-
-//     cats.toArray(function(err, result) {
-//       if (err) return res.status(500).send("Woops something went wrong");
-//       if (!result.length) return res.status(404).send("Poem not found");
-//       return res.send(result);
-//     });
-// });
+router.get("/category-links", function(req, res, next) {
+  db.collection("poems").distinct("category", function(err, result) {
+      if (err) return res.status(500).send("Woops something went wrong");
+      if (!result.length) return res.status(404).send("Poem not found");
+      return res.send(result);
+    });
+});
 
 router.get("/title/:title", function(req, res, next) {
   db.collection("poems")
