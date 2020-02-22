@@ -25,12 +25,15 @@ export const app = express();
 /**
  *  App Configuration
  */
-
+app.use(express.static("~/gw-client/build"))
 app.use(helmet())
 app.use(cors({origin: process.env.CORS}));
 app.use(express.json());
 
 app.use("/poems", poemsRouter)
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/gw-client/build/index.html'));
+});
 
 /**
  * Server Activation
