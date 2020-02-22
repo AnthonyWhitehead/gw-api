@@ -32,7 +32,7 @@ app.use(express.json());
 
 app.use("/poems", poemsRouter)
 app.get('*', (req,res) =>{
-    res.sendFile(path.join('/root/gw-client/public/index.html'));
+    res.sendFile('~/gw-client/public/index.html');
 });
 
 /**
