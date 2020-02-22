@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/index",
     "webpack": "webpack --config webpack.config.ts",
-    "build": "webpack"
+    "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -24,7 +24,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2",
     "webpack-shell-plugin": "^0.5.0",
-    "ts-loader": "^6.2.1"
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
@@ -46,7 +47,6 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "http-proxy-middleware": "^0.20.0",
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.5"
+    "prettier": "^1.19.1"
   }
 }
